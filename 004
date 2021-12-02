@@ -1,0 +1,25 @@
+local Players = game:GetService("Players")
+script.Parent.Part.Touched:Connect(function(hit)
+	local plr = Players:GetPlayerFromCharacter(hit.Parent)
+	if plr then
+		local char = plr.Character
+		if char then
+			local trail = char.Head:FindFirstChild("Trail")
+			if trail then
+				return
+			end
+
+			local trail = script.Parent.Trail:Clone()
+			trail.Name = "Trail"
+			trail.Parent = char.Head
+			local attachment0 = Instance.new("Attachment", char.Head)
+			attachment0.Name = "TrailAttachment0"
+			local attachment1 = Instance.new("Attachment", char.LowerTorso)
+			attachment1.Name = "TrailAttachment1"
+
+			trail.Attachment0 = attachment0
+			trail.Attachment1 = attachment1
+
+		end
+	end
+end)
