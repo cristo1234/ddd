@@ -1,0 +1,59 @@
+local right = script.Parent.right
+local right_open = script.Parent.right_open
+local right_closed = script.Parent.right_closed
+
+local left = script.Parent.left
+local left_open = script.Parent.left_open
+local left_closed = script.Parent.left_closed
+
+local panelOnePressed = false
+local panelTwoPressed = false
+local panelOne = script.Parent.panelOne
+local panelTwo = script.Parent.panelTwo
+
+local TweenService = game:GetService("TweenService")
+local doorTime = 2.3
+local closeDelay = 1
+local tweenInfo = TweenInfo.new(doorTime, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0,false,0)
+local tweenService = game:GetService("TweenService")
+
+
+panelOne.Touched:Connect(function(hit) 
+	panelOne.Color = Color3.new(0,1,0)
+	if panelTwoPressed then
+		tweenService:Create(right,tweenInfo,{CFrame = right_open.CFrame}):Play()
+		tweenService:Create(left,tweenInfo,{CFrame = left_open.CFrame}):Play()
+		wait(doorTime+closeDelay)
+		tweenService:Create(right,tweenInfo,{CFrame = right_closed.CFrame}):Play()
+		tweenService:Create(left,tweenInfo,{CFrame = left_closed.CFrame}):Play()
+		wait(doorTime)
+	end
+	panelOnePressed = true
+end)
+
+panelOne.TouchEnded:Connect(function(hit) 
+	panelOnePressed = false
+	panelOne.Color = Color3.new(1,0,0)
+	
+end)
+
+panelTwo.Touched:Connect(function(hit) 
+	panelTwo.Color = Color3.new(0,1,0)
+	if panelOnePressed then
+		tweenService:Create(right,tweenInfo,{CFrame = right_open.CFrame}):Play()
+		tweenService:Create(left,tweenInfo,{CFrame = left_open.CFrame}):Play()
+		wait(doorTime+closeDelay)
+		tweenService:Create(right,tweenInfo,{CFrame = right_closed.CFrame}):Play()
+		tweenService:Create(left,tweenInfo,{CFrame = left_closed.CFrame}):Play()
+		wait(doorTime)
+	end
+	panelTwoPressed = true
+end)
+
+panelTwo.TouchEnded:Connect(function(hit) 
+	panelTwoPressed = false
+	panelTwo.Color = Color3.new(1,0,0)
+
+end)
+
+
