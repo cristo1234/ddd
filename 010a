@@ -1,0 +1,22 @@
+local doorHinge = script.Parent.doorHinge
+local doorOpen = TweenInfo.new()
+local closed = true
+local angle = 120 -- change this to set the degree of opening
+local tweenService = game:GetService("TweenService")
+local doorTime = 2 -- change this to set the open\close time
+
+local proximityPrompt = script.Parent.doorHinge.ProximityPrompt
+
+local tweenInfo = TweenInfo.new(doorTime,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0 )
+
+proximityPrompt.Triggered:Connect(function()
+	if closed then
+		tweenService:Create(doorHinge, tweenInfo, {CFrame = doorHinge.CFrame * CFrame.Angles(0, math.rad(angle),0) }):Play()
+		closed = false
+		proximityPrompt.ActionText = "Close"
+	else
+		tweenService:Create(doorHinge, tweenInfo, {CFrame = doorHinge.CFrame * CFrame.Angles(0, math.rad(-angle),0) }):Play()
+		closed = true
+		proximityPrompt.ActionText = "Open"
+	end	
+end)
