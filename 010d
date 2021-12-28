@@ -1,0 +1,33 @@
+local garage_door = script.Parent.door
+local frameClose = script.Parent.close
+local frameOpen = script.Parent.open
+local closed = true
+local doorTime = 2
+local tweenService = game:GetService("TweenService")
+local tweenInfo = TweenInfo.new(doorTime,Enum.EasingStyle.Linear,Enum.EasingDirection.Out, 0, false, 0 )
+
+script.Parent.outside_sensor.Touched:Connect(function(hit) 
+	if closed then
+		tweenService:Create(garage_door,tweenInfo,{CFrame = frameOpen.CFrame}):Play()
+		wait(doorTime)
+		closed = false		
+	else
+		tweenService:Create(garage_door,tweenInfo,{CFrame = frameClose.CFrame}):Play() 
+		wait(doorTime)
+		closed = true	
+	end
+end)
+
+script.Parent.inside_sensor.Touched:Connect(function(hit) 
+	if closed then
+		tweenService:Create(garage_door,tweenInfo,{CFrame = frameOpen.CFrame}):Play()
+		wait(doorTime)
+		closed = false		
+	else
+		tweenService:Create(garage_door,tweenInfo,{CFrame = frameClose.CFrame}):Play() 
+		wait(doorTime)
+		closed = true	
+	end
+end)
+
+
