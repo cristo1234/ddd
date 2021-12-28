@@ -1,0 +1,21 @@
+local openPos = script.Parent.Parent.open
+local closePos = script.Parent.Parent.close
+local door = script.Parent.Parent.door
+local closed = true
+local doorTime = 2.5
+local tweenService = game:GetService("TweenService")
+local tweenInfo = TweenInfo.new(doorTime,Enum.EasingStyle.Linear,Enum.EasingDirection.Out, 0, false, 0 )
+
+door.ProximityPrompt.Triggered:Connect(function() 
+	if closed then
+		tweenService:Create(door,tweenInfo,{CFrame = openPos.CFrame}):Play()
+		door.ProximityPrompt.ActionText = "Close"
+		closed = false	
+	else 
+		tweenService:Create(door,tweenInfo,{CFrame = closePos.CFrame}):Play()
+		door.ProximityPrompt.ActionText = "Open"
+		closed = true	
+	end
+end)
+
+
